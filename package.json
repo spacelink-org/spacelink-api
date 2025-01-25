@@ -1,0 +1,43 @@
+{
+    "name": "@spacelink/api",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "bun run --watch src/http/server.ts",
+        "generate": "npx drizzle-kit generate",
+        "migrate": "npx drizzle-kit migrate",
+        "seed": "bun src/db/seed.ts",
+        "build": "bun build src/http/server.ts --outdir dist --target node"
+    },
+    "dependencies": {
+        "@elysiajs/cors": "^1.2.0",
+        "@elysiajs/jwt": "^1.2.0",
+        "@elysiajs/swagger": "^1.2.0",
+        "@paralleldrive/cuid2": "^2.2.2",
+        "@types/bcrypt": "^5.0.2",
+        "aws-sdk": "^2.1692.0",
+        "bcrypt": "^5.1.1",
+        "chalk": "^5.4.1",
+        "dayjs": "^1.11.13",
+        "dotenv": "^16.4.7",
+        "drizzle-kit": "^0.30.2",
+        "drizzle-orm": "^0.38.4",
+        "elysia": "latest",
+        "mock-aws-s3": "^4.0.2",
+        "nock": "^14.0.0",
+        "pg": "^8.13.1",
+        "postgres": "^3.4.5",
+        "zod": "^3.24.1"
+    },
+    "devDependencies": {
+        "@fakerjs/faker": "^3.0.0",
+        "@types/node": "^22.10.10",
+        "@types/pg": "^8.11.10",
+        "bun-types": "latest",
+        "eslint": "^9.18.0",
+        "globals": "^15.14.0",
+        "prettier": "3.4.2",
+        "tsx": "^4.19.2",
+        "typescript-eslint": "^8.21.0"
+    },
+    "module": "src/index.js"
+}
