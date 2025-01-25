@@ -6,7 +6,7 @@
         "generate": "npx drizzle-kit generate",
         "migrate": "npx drizzle-kit migrate",
         "seed": "bun src/db/seed.ts",
-        "build": "bun build src/http/server.ts --outdir dist --target node"
+        "build": "bun build src/http/server.ts --target node --outdir dist"
     },
     "dependencies": {
         "@elysiajs/cors": "^1.2.0",
