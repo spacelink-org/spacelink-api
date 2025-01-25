@@ -15,19 +15,13 @@ export const authenticateWithPassword = new Elysia().use(auth).post(
         })
 
         if (!user) {
-            return {
-                status: 404,
-                message: 'User not found',
-            }
+            throw new Error('User not found')
         }
 
         const comparePasswords = await bcrypt.compare(password, user.password)
 
         if (!comparePasswords) {
-            return {
-                status: 401,
-                message: 'Password incorrect!',
-            }
+            throw new Error('Password incorrect!')
         }
 
         const token = await jwt.sign({
@@ -45,7 +39,10 @@ export const authenticateWithPassword = new Elysia().use(auth).post(
             role: user.role,
         })
 
-        return token
+        return {
+            status: 200,
+            message: 'User authenticated successfully',
+        }
     },
     {
         body: t.Object({
