@@ -1,6 +1,7 @@
 {
     "name": "@spacelink/api",
     "version": "1.0.0",
+    "packageManager": "bun@1.1.1",
     "scripts": {
         "dev": "bun run --watch src/http/server.ts",
         "generate": "npx drizzle-kit generate",
