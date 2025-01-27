@@ -1,4 +1,5 @@
 export * from './users'
 export * from './transactions'
 export * from './tokens'
+export * from './transfer-keys'
 export * from './customers'

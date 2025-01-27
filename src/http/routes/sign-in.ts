@@ -3,8 +3,8 @@ import { db } from '../../db'
 import { auth } from '../auth'
 import * as bcrypt from 'bcrypt'
 
-export const authenticateWithPassword = new Elysia().use(auth).post(
-    '/auth/password',
+export const signIn = new Elysia().use(auth).post(
+    '/sign-in',
     async ({ body, jwt, cookie: { authToken }, signUser }) => {
         const { email, password } = body
 

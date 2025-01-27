@@ -7,6 +7,14 @@ export const roleEnum = pgEnum('user_role', [
     'member',
 ])
 
+export const statusEnum = pgEnum('user_status', [
+    'confirm_pending',
+    'payment_pending',
+    'active',
+    'blocked',
+    'suspended',
+])
+
 export const users = pgTable('users', {
     id: text('id')
         .$defaultFn(() => createId())
@@ -17,6 +25,7 @@ export const users = pgTable('users', {
     password: text('password').notNull(),
     phone: text('phone'),
     role: roleEnum('role').default('customer').notNull(),
+    status: statusEnum('status').default('confirm_pending').notNull(),
     wallet: real('wallet').default(0).notNull(),
     memberId: text('member_id'),
     createdAt: timestamp('created_at').defaultNow().notNull(),

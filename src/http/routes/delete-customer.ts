@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { users } from '@/db/schema'
+import { customers, users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import Elysia, { t } from 'elysia'
 
@@ -8,9 +8,14 @@ export const deleteUser = new Elysia().post(
     async ({ body }) => {
         const { id: userId } = body
 
-        const user = await db.delete(users).where(eq(users.id, userId))
+        await db.delete(users).where(eq(users.id, userId))
 
-        return user
+        await db.delete(customers).where(eq(customers.userId, userId))
+
+        return {
+            status: 200,
+            message: 'User deleted successfully',
+        }
     },
     {
         body: t.Object({

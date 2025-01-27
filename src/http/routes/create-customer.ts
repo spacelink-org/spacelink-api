@@ -2,15 +2,21 @@ import Elysia, { t } from 'elysia'
 import { db } from '@/db'
 import { customers, tokens, users } from '@/db/schema'
 import { createId } from '@paralleldrive/cuid2'
-import chalk from 'chalk'
 import * as bcrypt from 'bcrypt'
 import { auth } from '../auth'
+import { resend } from '@/config/resend.config'
+import { InvitationEmail } from '@/lib/mail/templates/invitation-email'
+import { eq } from 'drizzle-orm'
 
-export const createUser = new Elysia().use(auth).post(
-    '/users/create',
+export const createCustomer = new Elysia().use(auth).post(
+    '/customers/create',
     async ({ body, getCurrentUser }) => {
         const { name, email, phone, password, document } = body
         const { sub: userId } = await getCurrentUser()
+
+        const invitedByUser = await db.query.users.findFirst({
+            where: eq(users.id, userId),
+        })
 
         const createUserByEmail = db.transaction(async (tx) => {
             const hashedPassword = await bcrypt.hash(password, 12)
@@ -23,6 +29,7 @@ export const createUser = new Elysia().use(auth).post(
                     phone,
                     document,
                     role: 'customer',
+                    status: 'confirm_pending',
                     password: hashedPassword,
                     memberId: userId,
                 })
@@ -43,10 +50,16 @@ export const createUser = new Elysia().use(auth).post(
                 customerStatus: 'pending_validation',
             })
 
-            // TODO: add send email method later
-            console.log(
-                chalk.greenBright(`${process.env.BASE_URL}/?token=${token}`)
-            )
+            await resend.emails.send({
+                from: 'MembersClub <noreply@spacelinkbrasil.com.br>',
+                to: email,
+                subject: 'Bem vindo ao MembersClub!',
+                react: InvitationEmail({
+                    username: name,
+                    inviteLink: `${process.env.BASE_URL}/?token=${token}`,
+                    invitedByUsername: invitedByUser?.name,
+                }),
+            })
         })
 
         return createUserByEmail

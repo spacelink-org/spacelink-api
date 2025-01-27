@@ -6,7 +6,7 @@ import { auth } from '../auth'
 
 export const getWalletBalance = new Elysia()
     .use(auth)
-    .get('/wallet/balance', async ({ getCurrentUser }) => {
+    .get('/users/wallet', async ({ getCurrentUser }) => {
         const { sub: userId } = await getCurrentUser()
 
         const user = await db.query.users.findFirst({

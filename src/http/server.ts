@@ -2,22 +2,28 @@ import { Elysia } from 'elysia'
 import swagger from '@elysiajs/swagger'
 import cors from '@elysiajs/cors'
 import { auth } from './auth'
-import { authenticateFromLink } from './routes/authenticate-from-link'
-import { authenticateWithPassword } from './routes/authenticate-with-password'
+import { signIn } from './routes/sign-in'
 import { signOut } from './routes/sign-out'
-import { getUsers } from './routes/get-users'
+import { getCustomers } from './routes/get-customers'
 import { getMe } from './routes/get-me'
 import { getTransactions } from './routes/get-transactions'
 import { getTransactionDetails } from './routes/get-transaction-details'
-import { createUser } from './routes/create-user'
+import { createCustomer } from './routes/create-customer'
 import { createTransaction } from './routes/create-transaction'
-import { sendAuthLink } from './routes/send-auth-link'
-import { getUserDetails } from './routes/get-user-details'
-import { deleteUser } from './routes/delete-user'
+import { getCustomerDetails } from './routes/get-customers-details'
+import { deleteUser } from './routes/delete-customer'
 import { updateUser } from './routes/update-user'
 import { getWalletBalance } from './routes/get-wallet-balance'
 import { getCreditsWallet } from './routes/get-credits-wallet'
 import { getDebits } from './routes/get-debits'
+import { signUp } from './routes/sign-up'
+import { confirmEmail } from './routes/confirm-email'
+import { confirmPayment } from './routes/confirm-payment'
+import { createPaymentTransaction } from './routes/create-payment-transaction'
+import { createTransferKey } from './routes/create-transfer-key'
+import { deleteTransferKey } from './routes/delete-transfer-key'
+import { getTransferKeys } from './routes/get-transfers-keys'
+import { confirmCustomerPayment } from './routes/confirm-customer-payment'
 
 const app = new Elysia()
     .use(
@@ -46,22 +52,28 @@ const app = new Elysia()
     )
     .use(swagger())
     .use(auth)
-    .use(authenticateFromLink)
-    .use(authenticateWithPassword)
+    .use(signIn)
     .use(signOut)
-    .use(getUsers)
+    .use(getCustomers)
     .use(getMe)
     .use(getTransactions)
     .use(getTransactionDetails)
-    .use(createUser)
+    .use(createCustomer)
     .use(createTransaction)
-    .use(sendAuthLink)
-    .use(getUserDetails)
+    .use(getCustomerDetails)
     .use(deleteUser)
     .use(updateUser)
     .use(getWalletBalance)
     .use(getCreditsWallet)
     .use(getDebits)
+    .use(signUp)
+    .use(confirmEmail)
+    .use(confirmPayment)
+    .use(createPaymentTransaction)
+    .use(createTransferKey)
+    .use(deleteTransferKey)
+    .use(getTransferKeys)
+    .use(confirmCustomerPayment)
     .onError(({ code, error, set }) => {
         switch (code) {
             case 'VALIDATION': {

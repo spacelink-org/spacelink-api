@@ -5,7 +5,7 @@ export const envSchema = z.object({
     BASE_URL: z.string().url(),
     REDIRECT_URL: z.string().url(),
     DATABASE_URL: z.string().url().min(1),
-    // RESEND_API_KEY: z.string().min(1),
+    RESEND_API_KEY: z.string().min(1),
 })
 
 export const env = envSchema.parse(process.env)
