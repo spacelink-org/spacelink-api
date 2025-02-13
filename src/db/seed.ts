@@ -1,7 +1,6 @@
 import { users } from './schema/users'
 import { db } from '.'
 import chalk from 'chalk'
-import { faker } from '@faker-js/faker'
 import * as bcrypt from 'bcrypt'
 
 /**
@@ -18,7 +17,7 @@ console.log(chalk.yellow('Users tables successfully reseted'))
 
 await db.insert(users).values([
     {
-        name: faker.person.fullName(),
+        name: 'Administrator User',
         email: 'admin@admin.com',
         role: 'administrator',
         phone: '00000000000',

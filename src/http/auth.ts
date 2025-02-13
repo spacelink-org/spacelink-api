@@ -35,11 +35,11 @@ export const auth = new Elysia()
             getCurrentUser: async () => {
                 const token = authToken.value
 
-                const payload = await jwt.verify(token)
-
-                if (!payload) {
+                if (!token) {
                     throw new Error('deu ruim ai')
                 }
+
+                const payload = await jwt.verify(token)
 
                 return payload
             },

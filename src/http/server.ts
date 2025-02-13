@@ -24,6 +24,8 @@ import { createTransferKey } from './routes/create-transfer-key'
 import { deleteTransferKey } from './routes/delete-transfer-key'
 import { getTransferKeys } from './routes/get-transfers-keys'
 import { confirmCustomerPayment } from './routes/confirm-customer-payment'
+import { sendPasswordRecoveryEmail } from './routes/send-password-recovery-email'
+import { resetUserPassword } from './routes/reset-user-password'
 
 const app = new Elysia()
     .use(
@@ -74,6 +76,8 @@ const app = new Elysia()
     .use(deleteTransferKey)
     .use(getTransferKeys)
     .use(confirmCustomerPayment)
+    .use(sendPasswordRecoveryEmail)
+    .use(resetUserPassword)
     .onError(({ code, error, set }) => {
         switch (code) {
             case 'VALIDATION': {

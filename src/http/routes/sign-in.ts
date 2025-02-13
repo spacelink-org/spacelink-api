@@ -42,13 +42,13 @@ export const signIn = new Elysia().use(auth).post(
         return {
             status: 200,
             message: 'User authenticated successfully',
+            token: token,
         }
     },
     {
         body: t.Object({
             email: t.String({ format: 'email' }),
             password: t.String(),
-            redirectLink: t.String(),
         }),
     }
 )
