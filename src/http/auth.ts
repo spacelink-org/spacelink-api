@@ -48,6 +48,7 @@ export const auth = new Elysia()
                 authToken.httpOnly = true
                 authToken.maxAge = 60 * 60 * 24 * 7
                 authToken.path = '/'
+                authToken.domain = env.DOMAIN
                 console.log('Cookie configured:', authToken.value)
             },
             signOut: () => {
