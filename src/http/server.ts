@@ -26,6 +26,7 @@ import { getTransferKeys } from './routes/get-transfers-keys'
 import { confirmCustomerPayment } from './routes/confirm-customer-payment'
 import { sendPasswordRecoveryEmail } from './routes/send-password-recovery-email'
 import { resetUserPassword } from './routes/reset-user-password'
+import { env } from '@/env'
 
 const app = new Elysia()
     .use(
@@ -43,12 +44,13 @@ const app = new Elysia()
             ],
             origin: (request): boolean => {
                 const origin = request.headers.get('origin')
+                const allowedOrigins = [env.BASE_URL]
 
                 if (!origin) {
                     return false
                 }
 
-                return true
+                return allowedOrigins.includes(origin)
             },
         })
     )

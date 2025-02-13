@@ -35,11 +35,11 @@ export const auth = new Elysia()
             getCurrentUser: async () => {
                 const token = authToken.value
 
-                if (!token) {
+                const payload = await jwt.verify(token)
+
+                if (!payload) {
                     throw new Error('deu ruim ai')
                 }
-
-                const payload = await jwt.verify(token)
 
                 return payload
             },
@@ -47,9 +47,8 @@ export const auth = new Elysia()
                 authToken.value = await jwt.sign(payload)
                 authToken.httpOnly = true
                 authToken.maxAge = 60 * 60 * 24 * 7
+                authToken.secure = true
                 authToken.path = '/'
-                authToken.domain = env.DOMAIN
-                console.log('Cookie configured:', authToken.value)
             },
             signOut: () => {
                 authToken.remove()
